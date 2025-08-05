@@ -1,0 +1,24 @@
+.navbar {
+	width: 100%;
+	font-size: 1.1em;
+	font-weight: bold;
+	padding: 0.5em 1em;
+	background-color: var(--gruvbox-mode-bg-1);
+}
+
+.navbar > * {
+	display: inline;
+}
+
+.logo {
+	margin-right: 1.2em;
+}
+
+.navbar .links {
+	list-style: none;
+}
+
+.navbar .links li {
+	display: inline;
+	margin-left: 1em;
+}

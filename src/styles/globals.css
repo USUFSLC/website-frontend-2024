@@ -1,15 +1,108 @@
+/* taken from https://github.com/VdustR/gruvbox.css */
+:root {
+  --gruvbox-abs-dark-0-hard: #1d2021;
+  --gruvbox-abs-dark-0: #282828;
+  --gruvbox-abs-dark-0-soft: #32302f;
+  --gruvbox-abs-dark-1: #3c3836;
+  --gruvbox-abs-dark-2: #504945;
+  --gruvbox-abs-dark-3: #665c54;
+  --gruvbox-abs-dark-4: #7c6f64;
+  --gruvbox-abs-dark-4-256: #7c6f64;
+  --gruvbox-abs-gray-245: #928374;
+  --gruvbox-abs-gray-244: #928374;
+  --gruvbox-abs-light-0-hard: #f9f5d7;
+  --gruvbox-abs-light-0: #fbf1c7;
+  --gruvbox-abs-light-0-soft: #f2e5bc;
+  --gruvbox-abs-light-1: #ebdbb2;
+  --gruvbox-abs-light-2: #d5c4a1;
+  --gruvbox-abs-light-3: #bdae93;
+  --gruvbox-abs-light-4: #a89984;
+  --gruvbox-abs-light-4-256: #a89984;
+  --gruvbox-abs-bright-red: #fb4934;
+  --gruvbox-abs-bright-green: #b8bb26;
+  --gruvbox-abs-bright-yellow: #fabd2f;
+  --gruvbox-abs-bright-blue: #83a598;
+  --gruvbox-abs-bright-purple: #d3869b;
+  --gruvbox-abs-bright-aqua: #8ec07c;
+  --gruvbox-abs-bright-orange: #fe8019;
+  --gruvbox-abs-neutral-red: #cc241d;
+  --gruvbox-abs-neutral-green: #98971a;
+  --gruvbox-abs-neutral-yellow: #d79921;
+  --gruvbox-abs-neutral-blue: #458588;
+  --gruvbox-abs-neutral-purple: #b16286;
+  --gruvbox-abs-neutral-aqua: #689d6a;
+  --gruvbox-abs-neutral-orange: #d65d0e;
+  --gruvbox-abs-faded-red: #9d0006;
+  --gruvbox-abs-faded-green: #79740e;
+  --gruvbox-abs-faded-yellow: #b57614;
+  --gruvbox-abs-faded-blue: #076678;
+  --gruvbox-abs-faded-purple: #8f3f71;
+  --gruvbox-abs-faded-aqua: #427b58;
+  --gruvbox-abs-faded-orange: #af3a03;
+  --gruvbox-mode-bg-0: var(--gruvbox-abs-light-0);
+  --gruvbox-mode-bg-0-s: var(--gruvbox-abs-light-0-soft);
+  --gruvbox-mode-bg-0-h: var(--gruvbox-abs-light-0-hard);
+  --gruvbox-mode-bg-1: var(--gruvbox-abs-light-1);
+  --gruvbox-mode-bg-2: var(--gruvbox-abs-light-2);
+  --gruvbox-mode-bg-3: var(--gruvbox-abs-light-3);
+  --gruvbox-mode-bg-4: var(--gruvbox-abs-light-4);
+  --gruvbox-mode-gray: var(--gruvbox-abs-gray-244);
+  --gruvbox-mode-fg-0: var(--gruvbox-abs-dark-0);
+  --gruvbox-mode-fg-1: var(--gruvbox-abs-dark-1);
+  --gruvbox-mode-fg-2: var(--gruvbox-abs-dark-2);
+  --gruvbox-mode-fg-3: var(--gruvbox-abs-dark-3);
+  --gruvbox-mode-fg-4: var(--gruvbox-abs-dark-4);
+  --gruvbox-mode-fg-4-256: var(--gruvbox-abs-dark-4-256);
+  --gruvbox-mode-red: var(--gruvbox-abs-faded-red);
+  --gruvbox-mode-green: var(--gruvbox-abs-faded-green);
+  --gruvbox-mode-yellow: var(--gruvbox-abs-faded-yellow);
+  --gruvbox-mode-blue: var(--gruvbox-abs-faded-blue);
+  --gruvbox-mode-purple: var(--gruvbox-abs-faded-purple);
+  --gruvbox-mode-aqua: var(--gruvbox-abs-faded-aqua);
+  --gruvbox-mode-orange: var(--gruvbox-abs-faded-orange);
+}
+.gruvbox-dark {
+  --gruvbox-mode-bg-0: var(--gruvbox-abs-dark-0);
+  --gruvbox-mode-bg-0-s: var(--gruvbox-abs-dark-0-soft);
+  --gruvbox-mode-bg-0-h: var(--gruvbox-abs-dark-0-hard);
+  --gruvbox-mode-bg-1: var(--gruvbox-abs-dark-1);
+  --gruvbox-mode-bg-2: var(--gruvbox-abs-dark-2);
+  --gruvbox-mode-bg-3: var(--gruvbox-abs-dark-3);
+  --gruvbox-mode-bg-4: var(--gruvbox-abs-dark-4);
+  --gruvbox-mode-gray: var(--gruvbox-abs-gray-244);
+  --gruvbox-mode-fg-0: var(--gruvbox-abs-light-0);
+  --gruvbox-mode-fg-1: var(--gruvbox-abs-light-1);
+  --gruvbox-mode-fg-2: var(--gruvbox-abs-light-2);
+  --gruvbox-mode-fg-3: var(--gruvbox-abs-light-3);
+  --gruvbox-mode-fg-4: var(--gruvbox-abs-light-4);
+  --gruvbox-mode-fg-4-256: var(--gruvbox-abs-light-4-256);
+  --gruvbox-mode-red: var(--gruvbox-abs-bright-red);
+  --gruvbox-mode-green: var(--gruvbox-abs-bright-green);
+  --gruvbox-mode-yellow: var(--gruvbox-abs-bright-yellow);
+  --gruvbox-mode-blue: var(--gruvbox-abs-bright-blue);
+  --gruvbox-mode-purple: var(--gruvbox-abs-bright-purple);
+  --gruvbox-mode-aqua: var(--gruvbox-abs-bright-aqua);
+  --gruvbox-mode-orange: var(--gruvbox-abs-bright-orange);
+}
+
 html {
   font-size: 15px;
 }
+
 body {
   font-family: monospace;
-  background-color: #282828;
+  background-color: var(--gruvbox-mode-bg-0);
   color: #ebdbb2;
+  margin: 0;
+}
+
+main {
   margin: 0 auto;
+  max-width: 700px;
   padding-left: 10px;
   padding-right: 10px;
-  max-width: 700px;
 }
+
 h1 {
   color: #fabd24;
   font-size: 2.5em;
