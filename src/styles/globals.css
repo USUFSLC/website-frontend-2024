@@ -1,5 +1,7 @@
-/* taken from https://github.com/VdustR/gruvbox.css */
 :root {
+  --content-width: 960px;
+
+  /* taken from https://github.com/VdustR/gruvbox.css */
   --gruvbox-abs-dark-0-hard: #1d2021;
   --gruvbox-abs-dark-0: #282828;
   --gruvbox-abs-dark-0-soft: #32302f;
@@ -112,7 +114,7 @@ body {
 
 main {
   margin: 0 auto;
-  max-width: 700px;
+  max-width: var(--content-width) ;
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -174,10 +176,68 @@ button.link {
   font-family: monospace;
 }
 
+button.link:hover {
+	background-color: inherit;
+};
+
 strong {
   color: var(--gruvbox-mode-fg-1);
 }
 
 strong a, a strong, strong .link, .link strong {
   color: var(--gruvbox-mode-bold-aqua);
+}
+
+input, textarea {
+    background-color: var(--gruvbox-mode-bg-0);
+    color: var(--gruvbox-mode-fg-1);
+    border: 2px solid var(--gruvbox-mode-bg-4);
+    border-radius: 4px;
+    font-family: monospace;
+    padding: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+textarea {
+    width: 100%;
+    height: 5em;
+}
+
+/* Focus styles */
+input:focus, textarea:focus {
+    border-color: var(--gruvbox-mode-purple);
+    outline: none;
+}
+
+/* Placeholder styles */
+input::placeholder, textarea::placeholder {
+    color: var(--gruvbox-mode-bg-4)
+}
+
+input:disabled, textarea:disabled {
+	background-color: var(--gruvbox-mode-bg-1);
+	color: var(--gruvbox-mode-fg-3);
+	border-color: var(--gruvbox-mode-bg-4);
+}
+
+input:disabled::placeholder {
+	color: var(--gruvbox-mode-fg-4);
+}
+
+/* Additional styles for buttons */
+button {
+	background-color: var(--gruvbox-mode-bold-blue);
+	color: var(--gruvbox-mode-bg-0);
+	border: none;
+	border-radius: 4px;
+	padding: 8px 12px;
+	cursor: pointer;
+	font-family: monospace;
+	transition: background-color 0.3s;
+}
+
+button:hover, button:focus {
+	background-color: var(--gruvbox-mode-bold-purple);
+	outline: none;
 }

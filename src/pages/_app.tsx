@@ -12,9 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <header>
         <Header />
       </header>
-      <main>
-        <Component {...pageProps} />
-      </main>
+      <Component {...pageProps} />
     </>
   );
 }

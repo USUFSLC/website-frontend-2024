@@ -39,7 +39,7 @@
 	color: var(--gruvbox-mode-bold-aqua);
 }
 
-@media screen and (width <= 700px) {
+@media screen and (width <= 800px) {
 	.expander {
 		display: block;
 	}
