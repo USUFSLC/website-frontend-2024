@@ -162,14 +162,22 @@ main li {
   margin-bottom: 5px;
 }
 
-a {
+a, .link {
   color: var(--gruvbox-mode-aqua);
+}
+
+button.link {
+  text-decoration: underline;
+  background-color: inherit;
+  border: none;
+  padding: 0;
+  font-family: monospace;
 }
 
 strong {
   color: var(--gruvbox-mode-fg-1);
 }
 
-strong a, a strong {
+strong a, a strong, strong .link, .link strong {
   color: var(--gruvbox-mode-bold-aqua);
 }
