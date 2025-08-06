@@ -1,6 +1,7 @@
 import styles from "@/styles/Header.module.css";
 import Link from "next/link";
 import { useState } from "react";
+import { useSession, signIn } from "next-auth/react";
 
 type NavbarEntry = { text: string; link: string };
 
@@ -18,6 +19,8 @@ const NAVBAR_ENTRIES: NavbarEntry[] = [
 export default function Header() {
   const [hidden, setHidden] = useState(true);
 
+  const { data: session } = useSession();
+
   function toggleNavbar() {
     setHidden(!hidden);
   }
@@ -25,7 +28,9 @@ export default function Header() {
   return (
     <nav className={`${styles.navbar} ${hidden ? styles.hidden : ""}`}>
       <div className={styles.left}>
-        <div className={styles.logo}>guest@usufslc %</div>
+        <div className={styles.logo}>
+          {session?.user?.name ?? "guest"}@usufslc %
+        </div>
         <ul className={styles.links}>
           {NAVBAR_ENTRIES.map((entry) => {
             return (
@@ -37,6 +42,12 @@ export default function Header() {
         </ul>
       </div>
       <div className={styles.right}>
+        <button
+          type="button"
+          onClick={() => signIn("fslc", { callbackUrl: "/" })}
+        >
+          Sign in
+        </button>
         <span className={styles.expander}>
           [&nbsp;
           <button type="button" onClick={toggleNavbar} className="link">

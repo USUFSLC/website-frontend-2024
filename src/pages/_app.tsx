@@ -1,3 +1,4 @@
+import { SessionProvider } from "next-auth/react";
 import Header from "@/components/header.tsx";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
@@ -9,10 +10,12 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <header>
-        <Header />
-      </header>
-      <Component {...pageProps} />
+      <SessionProvider refetchInterval={600}>
+        <header>
+          <Header />
+        </header>
+        <Component {...pageProps} />
+      </SessionProvider>
     </>
   );
 }
