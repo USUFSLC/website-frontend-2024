@@ -11,9 +11,9 @@ export default function Home() {
       <main>
         <h1>USU Free Software And Linux Club</h1>
         <p>
-          This is a temporary landing page for the USU FSLC, a club dedicated to
-          teaching about and encouraging the everyday use of Linux-based
-          operating systems as well as Free and Open-Source Software (FOSS).
+          We are a club at Utah State University dedicated to teaching about and
+          encouraging the everyday use of Linux-based operating systems as well
+          as Free and Open-Source Software (FOSS).
         </p>
         <h2>Meetings</h2>
         <p>

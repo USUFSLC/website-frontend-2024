@@ -53,13 +53,20 @@
   --gruvbox-mode-fg-3: var(--gruvbox-abs-dark-3);
   --gruvbox-mode-fg-4: var(--gruvbox-abs-dark-4);
   --gruvbox-mode-fg-4-256: var(--gruvbox-abs-dark-4-256);
-  --gruvbox-mode-red: var(--gruvbox-abs-faded-red);
-  --gruvbox-mode-green: var(--gruvbox-abs-faded-green);
-  --gruvbox-mode-yellow: var(--gruvbox-abs-faded-yellow);
-  --gruvbox-mode-blue: var(--gruvbox-abs-faded-blue);
-  --gruvbox-mode-purple: var(--gruvbox-abs-faded-purple);
-  --gruvbox-mode-aqua: var(--gruvbox-abs-faded-aqua);
-  --gruvbox-mode-orange: var(--gruvbox-abs-faded-orange);
+  --gruvbox-mode-bold-red: var(--gruvbox-abs-faded-red);
+  --gruvbox-mode-bold-green: var(--gruvbox-abs-faded-green);
+  --gruvbox-mode-bold-yellow: var(--gruvbox-abs-faded-yellow);
+  --gruvbox-mode-bold-blue: var(--gruvbox-abs-faded-blue);
+  --gruvbox-mode-bold-purple: var(--gruvbox-abs-faded-purple);
+  --gruvbox-mode-bold-aqua: var(--gruvbox-abs-faded-aqua);
+  --gruvbox-mode-bold-orange: var(--gruvbox-abs-faded-orange);
+  --gruvbox-mode-red: var(--gruvbox-abs-neutral-red);
+  --gruvbox-mode-green: var(--gruvbox-abs-neutral-green);
+  --gruvbox-mode-yellow: var(--gruvbox-abs-neutral-yellow);
+  --gruvbox-mode-blue: var(--gruvbox-abs-neutral-blue);
+  --gruvbox-mode-purple: var(--gruvbox-abs-neutral-purple);
+  --gruvbox-mode-aqua: var(--gruvbox-abs-neutral-aqua);
+  --gruvbox-mode-orange: var(--gruvbox-abs-neutral-orange);
 }
 .gruvbox-dark {
   --gruvbox-mode-bg-0: var(--gruvbox-abs-dark-0);
@@ -76,13 +83,20 @@
   --gruvbox-mode-fg-3: var(--gruvbox-abs-light-3);
   --gruvbox-mode-fg-4: var(--gruvbox-abs-light-4);
   --gruvbox-mode-fg-4-256: var(--gruvbox-abs-light-4-256);
-  --gruvbox-mode-red: var(--gruvbox-abs-bright-red);
-  --gruvbox-mode-green: var(--gruvbox-abs-bright-green);
-  --gruvbox-mode-yellow: var(--gruvbox-abs-bright-yellow);
-  --gruvbox-mode-blue: var(--gruvbox-abs-bright-blue);
-  --gruvbox-mode-purple: var(--gruvbox-abs-bright-purple);
-  --gruvbox-mode-aqua: var(--gruvbox-abs-bright-aqua);
-  --gruvbox-mode-orange: var(--gruvbox-abs-bright-orange);
+  --gruvbox-mode-bold-red: var(--gruvbox-abs-bright-red);
+  --gruvbox-mode-bold-green: var(--gruvbox-abs-bright-green);
+  --gruvbox-mode-bold-yellow: var(--gruvbox-abs-bright-yellow);
+  --gruvbox-mode-bold-blue: var(--gruvbox-abs-bright-blue);
+  --gruvbox-mode-bold-purple: var(--gruvbox-abs-bright-purple);
+  --gruvbox-mode-bold-aqua: var(--gruvbox-abs-bright-aqua);
+  --gruvbox-mode-bold-orange: var(--gruvbox-abs-bright-orange);
+  --gruvbox-mode-red: var(--gruvbox-abs-neutral-red);
+  --gruvbox-mode-green: var(--gruvbox-abs-neutral-green);
+  --gruvbox-mode-yellow: var(--gruvbox-abs-neutral-yellow);
+  --gruvbox-mode-blue: var(--gruvbox-abs-neutral-blue);
+  --gruvbox-mode-purple: var(--gruvbox-abs-neutral-purple);
+  --gruvbox-mode-aqua: var(--gruvbox-abs-neutral-aqua);
+  --gruvbox-mode-orange: var(--gruvbox-abs-neutral-orange);
 }
 
 html {
@@ -92,7 +106,7 @@ html {
 body {
   font-family: monospace;
   background-color: var(--gruvbox-mode-bg-0);
-  color: #ebdbb2;
+  color: var(--gruvbox-mode-fg-2);
   margin: 0;
 }
 
@@ -104,49 +118,58 @@ main {
 }
 
 h1 {
-  color: #fabd24;
+  color: var(--gruvbox-mode-bold-yellow);
   font-size: 2.5em;
   margin-bottom: 0.5em;
 }
+
 h2 {
-  color: #fe8019;
+  color: var(--gruvbox-mode-bold-orange);
   font-size: 2em;
   margin-bottom: 0.5em;
 }
+
 h3 {
-  color: #fabd24;
+  color: var(--gruvbox-mode-bold-yellow);
   font-size: 1.5em;
   margin-bottom: 0.5em;
 }
+
 h4 {
-  color: #ebdbb2;
+  color: var(--gruvbox-mode-bold-green);
   font-size: 1.2em;
   margin-bottom: 0.5em;
 }
+
 h5 {
-  color: #b8bb26;
+  color: var(--gruvbox-mode-fg-0);
   font-size: 1em;
   margin-bottom: 0.5em;
 }
+
 h6 {
-  color: #8ec07c;
+  color: var(--gruvbox-mode-fg-0);
   font-size: 1em;
   margin-bottom: 0.5em;
 }
-p {
-  margin-bottom: 20px;
-}
-ul {
+
+main ul {
   list-style-type: none;
   padding: 0;
 }
-li {
+
+main li {
   margin-bottom: 5px;
 }
+
 a {
-  color: #8ec07c;
-}
-strong {
-  color: #fbf1c7;
+  color: var(--gruvbox-mode-aqua);
 }
 
+strong {
+  color: var(--gruvbox-mode-fg-1);
+}
+
+strong a, a strong {
+  color: var(--gruvbox-mode-bold-aqua);
+}

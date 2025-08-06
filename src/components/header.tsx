@@ -17,12 +17,12 @@ const NAVBAR_ENTRIES: NavbarEntry[] = [
 export default function Header() {
   return (
     <nav className={styles.navbar}>
-      <div className={styles.logo}>USU FSLC</div>
+      <div className={styles.logo}>guest@usufslc %</div>
       <ul className={styles.links}>
         {NAVBAR_ENTRIES.map((entry) => {
           return (
             <li key={entry.text}>
-              [ <Link href={entry.link}>{entry.text}</Link> ]
+              [&nbsp;<Link href={entry.link}>{entry.text}</Link>&nbsp;]
             </li>
           );
         })}

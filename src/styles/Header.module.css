@@ -1,17 +1,22 @@
 .navbar {
-	width: 100%;
+	width: calc(100% - 2em);
 	font-size: 1.1em;
 	font-weight: bold;
 	padding: 0.5em 1em;
 	background-color: var(--gruvbox-mode-bg-1);
+	border-bottom: 1px solid var(--gruvbox-mode-bg-3);
 }
 
 .navbar > * {
 	display: inline;
 }
 
+.navbar ul {
+	padding-left: 0;
+}
+
 .logo {
-	margin-right: 1.2em;
+	margin-right: 0.5em;
 }
 
 .navbar .links {
