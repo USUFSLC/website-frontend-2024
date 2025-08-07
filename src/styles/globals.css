@@ -176,7 +176,7 @@ button.link {
   font-family: monospace;
 }
 
-button.link:hover {
+button.link:hover, button.link:active, button.link:focus {
 	background-color: inherit;
 };
 

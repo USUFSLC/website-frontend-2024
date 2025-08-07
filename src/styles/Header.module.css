@@ -2,6 +2,7 @@
 	width: calc(100% - 2em);
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	font-size: 1.1em;
 	font-weight: bold;
 	padding: 0.5em 1em;
@@ -9,8 +10,14 @@
 	border-bottom: 1px solid var(--gruvbox-mode-bg-3);
 }
 
-.navbar .left > * {
-	display: inline;
+.navbar .left , .navbar .right {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+}
+
+.navbar .right > * {
+	margin-left: 0.5em;
 }
 
 .logo {
@@ -19,6 +26,7 @@
 
 .navbar ul {
 	padding-left: 0;
+	margin: 0;
 	list-style: none;
 }
 
@@ -31,11 +39,7 @@
 	display: none;
 }
 
-.expander button {
-	font-weight: bold;
-}
-
-.navbar a, .navbar button {
+.navbar a {
 	color: var(--gruvbox-mode-bold-aqua);
 }
 
@@ -44,8 +48,18 @@
 		display: block;
 	}
 
-	.navbar .left > * {
-		display: block;
+	.navbar.hidden {
+		align-items: center;
+	}
+
+	.navbar {
+		align-items: start;
+	}
+
+	.navbar .left {
+		display: flex;
+		flex-direction: column;
+		align-items: start;
 	}
 
 	.navbar ul {

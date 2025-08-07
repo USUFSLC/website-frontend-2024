@@ -49,11 +49,9 @@ export default function Header() {
           Sign in
         </button>
         <span className={styles.expander}>
-          [&nbsp;
-          <button type="button" onClick={toggleNavbar} className="link">
+          <button type="button" onClick={toggleNavbar}>
             {hidden ? "++" : "--"}
           </button>
-          &nbsp;]
         </span>
       </div>
     </nav>
