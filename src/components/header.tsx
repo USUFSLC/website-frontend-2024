@@ -19,7 +19,7 @@ const NAVBAR_ENTRIES: NavbarEntry[] = [
 export default function Header() {
   const [hidden, setHidden] = useState(true);
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   function toggleNavbar() {
     setHidden(!hidden);
@@ -34,7 +34,10 @@ export default function Header() {
               {hidden ? "++" : "--"}
             </button>
           </span>
-          {session?.user?.name ?? "guest"}@usufslc %
+          {status === "unauthenticated"
+            ? "guest"
+            : session?.user?.name ?? "user"}
+          @usufslc %
         </span>
         <ul className={styles.links}>
           {NAVBAR_ENTRIES.map((entry) => {
