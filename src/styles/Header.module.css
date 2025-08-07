@@ -45,7 +45,8 @@
 
 @media screen and (width <= 800px) {
 	.expander {
-		display: block;
+		display: inline;
+		margin-right: 0.7em;
 	}
 
 	.navbar.hidden {

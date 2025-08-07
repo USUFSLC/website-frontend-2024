@@ -28,9 +28,14 @@ export default function Header() {
   return (
     <nav className={`${styles.navbar} ${hidden ? styles.hidden : ""}`}>
       <div className={styles.left}>
-        <div className={styles.logo}>
+        <span className={styles.logo}>
+          <span className={styles.expander}>
+            <button type="button" onClick={toggleNavbar}>
+              {hidden ? "++" : "--"}
+            </button>
+          </span>
           {session?.user?.name ?? "guest"}@usufslc %
-        </div>
+        </span>
         <ul className={styles.links}>
           {NAVBAR_ENTRIES.map((entry) => {
             return (
@@ -48,11 +53,6 @@ export default function Header() {
         >
           Sign in
         </button>
-        <span className={styles.expander}>
-          <button type="button" onClick={toggleNavbar}>
-            {hidden ? "++" : "--"}
-          </button>
-        </span>
       </div>
     </nav>
   );
