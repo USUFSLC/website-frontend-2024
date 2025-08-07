@@ -35,6 +35,7 @@ export const authOptions: AuthOptions = {
       const s = session as unknown as Record<string, unknown>;
       const u = token.user as Record<string, unknown>;
       s.user = {
+        token: token.access,
         id: u.sub,
         long_name: u.name,
         name: u.preferred_username,
@@ -43,10 +44,11 @@ export const authOptions: AuthOptions = {
 
       return s as unknown as Session;
     },
-    async jwt({ token, profile }) {
+    async jwt({ token, profile, account }) {
       const t = token;
-      if (profile) {
+      if (account) {
         t.user = profile;
+        t.access = account.access_token;
       }
 
       return t;
