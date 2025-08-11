@@ -1,7 +1,6 @@
 import styles from "@/styles/Header.module.css";
 import Link from "next/link";
 import { useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
 
 type NavbarEntry = { text: string; link: string };
 
@@ -19,8 +18,6 @@ const NAVBAR_ENTRIES: NavbarEntry[] = [
 export default function Header() {
   const [hidden, setHidden] = useState(true);
 
-  const { data: session, status } = useSession();
-
   function toggleNavbar() {
     setHidden(!hidden);
   }
@@ -34,10 +31,7 @@ export default function Header() {
               {hidden ? "++" : "--"}
             </button>
           </span>
-          {status === "unauthenticated"
-            ? "guest"
-            : session?.user?.name ?? "user"}
-          @usufslc %
+          guest@usufslc %
         </span>
         <ul className={styles.links}>
           {NAVBAR_ENTRIES.map((entry) => {
@@ -50,15 +44,8 @@ export default function Header() {
         </ul>
       </div>
       <div className={styles.right}>
-        <button
-          type="button"
-          onClick={
-            status === "unauthenticated"
-              ? () => signIn("fslc", { callbackUrl: "/" })
-              : () => signOut()
-          }
-        >
-          {status === "unauthenticated" ? "Sign in" : "Sign out"}
+        <button type="button" onClick={() => {}}>
+          Sign in
         </button>
       </div>
     </nav>
