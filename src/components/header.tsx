@@ -1,7 +1,7 @@
 import styles from "@/styles/Header.module.css";
 import Link from "next/link";
 import { useState } from "react";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 type NavbarEntry = { text: string; link: string };
 
@@ -52,9 +52,13 @@ export default function Header() {
       <div className={styles.right}>
         <button
           type="button"
-          onClick={() => signIn("fslc", { callbackUrl: "/" })}
+          onClick={
+            status === "unauthenticated"
+              ? () => signIn("fslc", { callbackUrl: "/" })
+              : () => signOut()
+          }
         >
-          Sign in
+          {status === "unauthenticated" ? "Sign in" : "Sign out"}
         </button>
       </div>
     </nav>
