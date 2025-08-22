@@ -1,6 +1,8 @@
 import styles from "@/styles/Header.module.css";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/components/auth-context.tsx";
 
 type NavbarEntry = { text: string; link: string };
 
@@ -18,6 +20,10 @@ const NAVBAR_ENTRIES: NavbarEntry[] = [
 export default function Header() {
   const [hidden, setHidden] = useState(true);
 
+  const { session } = useContext(AuthContext);
+
+  const router = useRouter();
+
   function toggleNavbar() {
     setHidden(!hidden);
   }
@@ -31,7 +37,7 @@ export default function Header() {
               {hidden ? "++" : "--"}
             </button>
           </span>
-          guest@usufslc %
+          {session?.username ?? "guest"}@usufslc %
         </span>
         <ul className={styles.links}>
           {NAVBAR_ENTRIES.map((entry) => {
@@ -44,7 +50,10 @@ export default function Header() {
         </ul>
       </div>
       <div className={styles.right}>
-        <button type="button" onClick={() => {}}>
+        <button
+          type="button"
+          onClick={() => router.push(`/api/auth/login?after=${router.asPath}`)}
+        >
           Sign in
         </button>
       </div>

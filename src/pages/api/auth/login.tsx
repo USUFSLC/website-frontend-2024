@@ -1,4 +1,4 @@
-import { AuthUserState, OIDC_CLIENT } from "@/utils.ts";
+import { AuthUserState, OIDC_CLIENT } from "@/authUtils.ts";
 import { NextApiRequest, NextApiResponse } from "next";
 import { redirect } from "next/dist/server/api-utils";
 
@@ -24,5 +24,6 @@ export default async function handler(
   const { url } = await OIDC_CLIENT.createSigninRequest({
     state: { after } as AuthUserState,
   });
+
   redirect(res, url);
 }

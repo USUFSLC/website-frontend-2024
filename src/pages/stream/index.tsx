@@ -2,6 +2,13 @@ import Head from "next/head";
 import styles from "@/styles/Watch.module.css";
 
 import ReactHlsPlayer from "react-hls-video-player/dist/components/ReactHlsPlayer";
+import { getServerSidePropsWithAuthDefaults } from "@/authUtils.ts";
+
+export const getServerSideProps = getServerSidePropsWithAuthDefaults(
+  async () => {
+    return { props: {} };
+  },
+);
 
 export default function Watch() {
   return (

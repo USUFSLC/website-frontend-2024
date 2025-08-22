@@ -1,4 +1,4 @@
-import { AuthUserState, OIDC_CLIENT } from "@/utils.ts";
+import { AuthUserState, OIDC_CLIENT, setAuthCookies } from "@/authUtils.ts";
 import { NextApiRequest, NextApiResponse } from "next";
 import { redirect } from "next/dist/server/api-utils";
 
@@ -11,9 +11,7 @@ export default async function handler(
 
   const userState = signInResponse.userState as AuthUserState;
 
-  res.setHeader("Set-Cookie", [
-    `__Secure-idToken=${signInResponse.id_token};samesite=strict;secure`,
-    `__Secure-refreshToken=${signInResponse.refresh_token};samesite=strict;secure`,
-  ]);
+  setAuthCookies(res, signInResponse);
+
   redirect(res, userState.after);
 }

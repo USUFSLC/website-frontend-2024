@@ -1,4 +1,11 @@
+import { getServerSidePropsWithAuthDefaults } from "@/authUtils.ts";
 import Head from "next/head";
+
+export const getServerSideProps = getServerSidePropsWithAuthDefaults(
+  async () => {
+    return { props: {} };
+  },
+);
 
 export default function Home() {
   return (
