@@ -1,10 +1,7 @@
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  NextApiResponse,
-} from "next";
-import { Log, OidcClient, SigninResponse } from "oidc-client-ts";
-import { JWTPayload, importJWK, jwtVerify } from "jose";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { IdTokenClaims, Log, OidcClient, SigninResponse } from "oidc-client-ts";
+import { JWTPayload, decodeJwt, importJWK, jwtVerify } from "jose";
+import { ServerResponse } from "http";
 
 const KEY_CACHE_TIME = Number(process.env.KEY_CACHE_TIME ?? 900) * 1000;
 let key: CryptoKey | Uint8Array | null = null;
@@ -41,7 +38,7 @@ Log.setLogger(console);
 Log.setLevel(Log.INFO);
 
 export function setAuthCookies(
-  res: NextApiResponse,
+  res: ServerResponse,
   signInResponse: SigninResponse,
 ) {
   res.setHeader("Set-Cookie", [
@@ -70,10 +67,58 @@ export function getSessionFromPayload(claims: JWTPayload): AuthSession {
   };
 }
 
-export function getSessionFromIdToken(token: string): Promise<AuthSession> {
-  return getPublicKey()
-    .then((k) => jwtVerify(token, k))
-    .then((jwt) => getSessionFromPayload(jwt.payload));
+export async function getSessionFromIdToken(
+  idToken: string,
+  refreshToken: string,
+  res: ServerResponse,
+): Promise<AuthSession> {
+  // NOTE: does not validate. this is fine because the IDM will do that for us.
+  // https://github.com/auth0/jwt-decode
+  const jwtPayload = decodeJwt(idToken);
+
+  // If the payload has an expiration date and it is more than 5 minutes out...
+  if (jwtPayload.exp !== undefined && Date.now() + 300e3 < jwtPayload.exp) {
+    // Verify the token, just to make sure the user did not tamper with it, then
+    // return a new session.
+    const jwk = await getPublicKey();
+    let payload: JWTPayload | null;
+    try {
+      payload = (await jwtVerify(idToken, jwk)).payload;
+    } catch (e) {
+      payload = null;
+    }
+
+    if (payload !== null) {
+      return getSessionFromPayload(payload);
+    }
+  }
+
+  let signInResponse;
+
+  // I don't know why, but this sometimes breaks without the catch
+  // I think it's because errors are thrown in different call stacks
+  // so the error does not propagate as you'd expect.
+  // eslint-disable-next-line
+  try {
+    // for some reason it thinks "useRefreshToken" is a React hook
+    // probably because it starts with "use"
+    // I hate the linter
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    signInResponse = await OIDC_CLIENT.useRefreshToken({
+      state: {
+        refresh_token: refreshToken,
+        profile: jwtPayload as unknown as IdTokenClaims,
+        session_state: null,
+      },
+    });
+  } catch (e) {
+    throw e;
+  }
+
+  setAuthCookies(res, signInResponse);
+
+  const claims = decodeJwt(signInResponse.id_token!);
+  return getSessionFromPayload(claims);
 }
 
 export function getServerSidePropsWithAuthDefaults<
@@ -84,10 +129,13 @@ export function getServerSidePropsWithAuthDefaults<
   return async (context: GetServerSidePropsContext) => {
     const result = (await callback(context)) as { props: T & AuthProps };
     const idToken = context.req.cookies["__Secure-idToken"];
+    const refreshToken = context.req.cookies["__Secure-refreshToken"];
     result.props.initialAuthSession =
-      idToken === undefined
+      idToken === undefined || refreshToken === undefined
         ? null
-        : await getSessionFromIdToken(idToken).catch(() => null);
+        : await getSessionFromIdToken(idToken, refreshToken, context.res).catch(
+            () => null,
+          );
     result.props.refreshUrl = "";
     return result;
   };

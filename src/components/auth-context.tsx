@@ -43,15 +43,17 @@ export default function AuthProvider({
       fetch("/api/auth/refresh")
         .then((r) => {
           if (!r.ok) {
-            setRefreshPopup(
+            throw new Error(
               "Could not refresh token. You may need to sign out and sign in again.",
             );
-            return "Could not refresh token";
           }
           return r.json();
         })
         .then((j) => {
           setSession(j);
+        })
+        .catch((e) => {
+          setRefreshPopup(e);
         });
     }, 600e3);
 
