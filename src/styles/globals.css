@@ -155,11 +155,6 @@ h6 {
   margin-bottom: 0.5em;
 }
 
-main ul {
-  list-style-type: none;
-  padding: 0;
-}
-
 main li {
   margin-bottom: 5px;
 }
@@ -200,7 +195,7 @@ input, textarea {
 }
 
 textarea {
-    width: 100%;
+    width: calc(100% - 20px);
     height: 5em;
 }
 
@@ -226,7 +221,7 @@ input:disabled::placeholder {
 }
 
 /* Additional styles for buttons */
-button {
+button, input[type=submit] {
 	background-color: var(--gruvbox-mode-bold-blue);
 	color: var(--gruvbox-mode-bg-0);
 	border: none;
@@ -237,7 +232,13 @@ button {
 	transition: background-color 0.3s;
 }
 
-button:hover, button:focus {
+button:disabled, button:disabled:hover, 
+input[type=submit]:hover, input[type=submit]:disabled:hover {
+	background-color: var(--gruvbox-mode-fg-4);
+	color: var(--gruvbox-mode-bg-2);
+}
+
+button:hover, button:focus, input[type=submit]:hover, input[type=submit]:focus {
 	background-color: var(--gruvbox-mode-bold-purple);
 	outline: none;
 }
