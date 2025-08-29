@@ -14,7 +14,7 @@ export default function EventOverview({ event }: Props) {
 
   let dateLine;
   if (event.starts_at === event.ends_at) {
-    dateLine = `${format(startDate, DPATTERN)}`;
+    dateLine = `${format(startDate, DPATTERN)} ${format(startDate, TPATTERN)}`;
   } else if (
     startDate.getFullYear() === endDate.getFullYear() &&
     startDate.getMonth() === endDate.getMonth() &&
@@ -45,18 +45,28 @@ export default function EventOverview({ event }: Props) {
         </li>
       )}
       <li>
-        <b>Streams:</b>{" "}
-        {event.streams === undefined || event.streams.length === 0 ? (
-          "none"
-        ) : (
-          <ul>
-            {event.streams.map((s) => (
-              <li>
-                <Link href={`/stream/${s.id}`}>{s.title}</Link>
-              </li>
-            ))}
-          </ul>
-        )}
+        <b>{event.streams?.length === 1 ? "Stream" : "Streams"}: </b>
+        {(() => {
+          if (event.streams === undefined || event.streams.length === 0) {
+            return "[none]";
+          }
+          if (event.streams.length === 1) {
+            return (
+              <Link href={`/stream/${event.streams[0].id}`}>
+                {event.streams[0].title}
+              </Link>
+            );
+          }
+          return (
+            <ul>
+              {event.streams.map((s) => (
+                <li key={s.id}>
+                  <Link href={`/stream/${s.id}`}>{s.title}</Link>
+                </li>
+              ))}
+            </ul>
+          );
+        })()}
       </li>
     </ul>
   );
