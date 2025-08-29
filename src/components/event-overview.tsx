@@ -1,5 +1,8 @@
 import { compile, format } from "date-and-time";
 import Link from "next/link";
+import { useContext } from "react";
+import { AuthContext } from "./auth-context.tsx";
+import StreamOneline from "./stream-oneline.tsx";
 
 type Props = {
   event: ServerEvent;
@@ -11,6 +14,8 @@ const TPATTERN = compile("HH:mm");
 export default function EventOverview({ event }: Props) {
   const startDate = new Date(event.starts_at * 1000);
   const endDate = new Date(event.ends_at * 1000);
+
+  const { session } = useContext(AuthContext);
 
   let dateLine;
   if (event.starts_at === event.ends_at) {
@@ -51,22 +56,30 @@ export default function EventOverview({ event }: Props) {
             return "[none]";
           }
           if (event.streams.length === 1) {
-            return (
-              <Link href={`/stream/${event.streams[0].id}`}>
-                {event.streams[0].title}
-              </Link>
-            );
+            return <StreamOneline stream={event.streams[0]} />;
           }
           return (
             <ul>
               {event.streams.map((s) => (
                 <li key={s.id}>
-                  <Link href={`/stream/${s.id}`}>{s.title}</Link>
+                  <StreamOneline stream={s} />
                 </li>
               ))}
             </ul>
           );
         })()}
+      </li>
+      {session?.roles?.findIndex((s) => s === "streamer") === -1 ? (
+        ""
+      ) : (
+        <li key="newstream">
+          <Link href={`event/${event.id}/add-stream`}>Add Stream</Link>
+        </li>
+      )}
+      <li key="more">
+        <strong>
+          <Link href={`/event/${event.id}`}>More info...</Link>
+        </strong>
       </li>
     </ul>
   );

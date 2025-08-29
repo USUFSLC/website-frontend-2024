@@ -2,8 +2,10 @@ import Head from "next/head";
 
 import { getServerSidePropsWithAuthDefaults } from "@/authUtils.ts";
 import Calendar from "react-calendar";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import EventOverview from "@/components/event-overview.tsx";
+import { AuthContext } from "@/components/auth-context.tsx";
+import Link from "next/link";
 
 export const getServerSideProps = getServerSidePropsWithAuthDefaults(
   async () => {
@@ -46,6 +48,8 @@ export default function CalendarPage() {
     loadEvents(now.getFullYear(), now.getMonth());
   }, []);
 
+  const { session } = useContext(AuthContext);
+
   return (
     <>
       <Head>
@@ -73,6 +77,15 @@ export default function CalendarPage() {
             }
           }}
         />
+        {session?.roles?.findIndex((s) => s === "leadership") === -1 ? (
+          ""
+        ) : (
+          <p>
+            <strong>
+              <Link href="/event/new">Create New Event</Link>
+            </strong>
+          </p>
+        )}
         <h2>Selected Events</h2>
         {selectedEvents.length === 0 ? (
           <p>--- none ---</p>
