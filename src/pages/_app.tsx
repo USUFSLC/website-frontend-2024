@@ -2,6 +2,7 @@ import { AuthSession } from "@/authUtils.ts";
 import AuthProvider from "@/components/auth-context.tsx";
 import Header from "@/components/header.tsx";
 import "@/styles/globals.css";
+import "@/styles/calendar.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 
