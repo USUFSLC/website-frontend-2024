@@ -15,6 +15,10 @@ const NAVBAR_ENTRIES: NavbarEntry[] = [
     text: "Streams",
     link: "/stream",
   },
+  {
+    text: "Calendar",
+    link: "/calendar",
+  },
 ];
 
 export default function Header() {
