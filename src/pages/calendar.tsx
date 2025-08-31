@@ -77,7 +77,8 @@ export default function CalendarPage() {
             }
           }}
         />
-        {session?.roles?.findIndex((s) => s === "leadership") === -1 ? (
+        {session?.roles === undefined ||
+        session.roles.findIndex((s) => s === "leadership") === -1 ? (
           ""
         ) : (
           <p>

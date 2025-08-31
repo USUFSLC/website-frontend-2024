@@ -74,7 +74,8 @@ export default function EventOverview({ event, basic }: Props) {
               );
             })()}
           </li>
-          {session?.roles?.findIndex((s) => s === "streamer") === -1 ? (
+          {session?.roles === undefined ||
+          session.roles.findIndex((s) => s === "streamer") === -1 ? (
             ""
           ) : (
             <li key="newstream">
