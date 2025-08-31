@@ -23,5 +23,6 @@ type ServerStream = {
   nonmember_presenter: string | null;
   description: string;
   event?: ServerEvent;
-  event_id: string;
+  event_id: string | null;
+  token?: string;
 };

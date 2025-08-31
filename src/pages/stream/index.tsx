@@ -3,6 +3,7 @@ import styles from "@/styles/Watch.module.css";
 
 import ReactHlsPlayer from "react-hls-video-player/dist/components/ReactHlsPlayer";
 import { getServerSidePropsWithAuthDefaults } from "@/authUtils.ts";
+import { useEffect, useState } from "react";
 
 export const getServerSideProps = getServerSidePropsWithAuthDefaults(
   async () => {
@@ -11,20 +12,50 @@ export const getServerSideProps = getServerSidePropsWithAuthDefaults(
 );
 
 export default function Watch() {
+  const [streams, setStreams] = useState<ServerStream[]>([]);
+
+  async function getStreams() {
+    const response = await fetch(`/api/stream/live/`);
+    if (response.ok) {
+      const j = await response.json();
+      setStreams(j);
+    }
+  }
+
+  useEffect(() => {
+    getStreams();
+    const handle = setInterval(getStreams, 10000);
+
+    return () => {
+      clearInterval(handle);
+    };
+  }, []);
+
   return (
     <>
       <Head>
-        <title>Streams @ USU FSLC</title>
+        <title>Streams | USU FSLC</title>
       </Head>
       <main>
         <h1>Watch</h1>
-        <ReactHlsPlayer
-          src="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
-          autoPlay={false}
-          controls
-          id="video"
-          className={styles.video}
-        />
+        {streams.map((s) => {
+          return (
+            <>
+              <h2>{s.title}</h2>
+              <ReactHlsPlayer
+                src={`content/stream/hls/${s.id}.${s.token}.m3u8`}
+                autoPlay={false}
+                controls
+                id="video"
+                className={styles.video}
+              />
+              <p>
+                <i>Presented by {s.presenter}</i>
+              </p>
+              <p>{s.description}</p>
+            </>
+          );
+        })}
       </main>
     </>
   );
