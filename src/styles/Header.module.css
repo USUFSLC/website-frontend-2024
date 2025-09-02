@@ -1,0 +1,78 @@
+.navbar {
+	width: calc(100% - 2em);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 1.1em;
+	font-weight: bold;
+	padding: 0.5em 1em;
+	background-color: var(--gruvbox-mode-bg-1);
+	border-bottom: 1px solid var(--gruvbox-mode-bg-3);
+}
+
+.navbar .left , .navbar .right {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.navbar .right > * {
+	margin-left: 0.5em;
+}
+
+.logo {
+	margin-right: 0.5em;
+}
+
+.navbar ul {
+	padding-left: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.navbar .links li {
+	display: inline;
+	margin-left: 1em;
+}
+
+.expander {
+	display: none;
+}
+
+.navbar a {
+	color: var(--gruvbox-mode-bold-aqua);
+}
+
+@media screen and (width <= 800px) {
+	.expander {
+		display: inline;
+		margin-right: 0.7em;
+	}
+
+	.navbar.hidden {
+		align-items: center;
+	}
+
+	.navbar {
+		align-items: flex-start;
+	}
+
+	.navbar .left {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.navbar ul {
+		margin: 0.3em 0;
+	}
+
+	.navbar.hidden .links {
+		display: none;
+	}
+
+	.navbar .links li {
+		display: block;
+		margin-bottom: 0.25em;
+	}
+}

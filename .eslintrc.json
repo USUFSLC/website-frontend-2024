@@ -21,7 +21,9 @@
     ],
     "@typescript-eslint/no-explicit-any": "error",
     "react/destructuring-assignment": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "no-bitwise": "off",
+    "jsx-a11y/media-has-caption": "off"
   },
   "plugins": [
     "prettier",
