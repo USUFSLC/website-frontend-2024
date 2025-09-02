@@ -1,10 +1,8 @@
 import Head from "next/head";
-import styles from "@/styles/Watch.module.css";
-
-import ReactHlsPlayer from "react-hls-video-player/dist/components/ReactHlsPlayer";
 import { getServerSidePropsWithAuthDefaults } from "@/authUtils.ts";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import HlsVideoPlayer from "@/components/HlsVideoPlayer.tsx";
 
 export const getServerSideProps = getServerSidePropsWithAuthDefaults(
   async () => {
@@ -25,11 +23,6 @@ export default function Watch() {
 
   useEffect(() => {
     getStreams();
-    const handle = setInterval(getStreams, 10000);
-
-    return () => {
-      clearInterval(handle);
-    };
   }, []);
 
   return (
@@ -53,12 +46,8 @@ export default function Watch() {
           return (
             <>
               <h2>{s.title}</h2>
-              <ReactHlsPlayer
+              <HlsVideoPlayer
                 src={`content/stream/hls/${s.id}.${s.token}.m3u8`}
-                autoPlay={false}
-                controls
-                id="video"
-                className={styles.video}
               />
               <p>
                 <i>Presented by {s.presenter}</i>
