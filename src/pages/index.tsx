@@ -1,5 +1,6 @@
 import { getServerSidePropsWithAuthDefaults } from "@/authUtils.ts";
 import Head from "next/head";
+import Link from "next/link";
 
 export const getServerSideProps = getServerSidePropsWithAuthDefaults(
   async () => {
@@ -24,26 +25,19 @@ export default function Home() {
         </p>
         <h2>Meetings</h2>
         <p>
-          Over the summer, we hold meetings <strong>every Wednesday</strong> at{" "}
-          <strong>6:00 pm</strong> in <strong>ESLC 053</strong> (check our
-          Discord for more information). There are no presentations, just
-          hacking and chatting.
+          This semester, we will be holding meetings
+          <strong>every Tuesday</strong> at <strong>6:30 pm</strong> in{" "}
+          <strong>ESLC 053</strong>
+          (check our Discord for more information). See{" "}
+          <strong>
+            <Link href="/calendar">the calendar page</Link>
+          </strong>{" "}
+          for upcoming events. Also, all of our meetings are streamed! See{" "}
+          <strong>
+            <Link href="/stream">the stream page</Link>
+          </strong>{" "}
+          for ongoing streams.
         </p>
-        <ul>
-          <li>
-            <strong>March 25</strong>: Linux system administration, from an
-            expert
-          </li>
-          <li>
-            <strong>April 1</strong>: SystemU (SystemD and You)
-          </li>
-          <li>
-            <strong>April 8</strong>: Proving code mathematically with SMT
-          </li>
-          <li>
-            <strong>April 15</strong>: Algebraic effects
-          </li>
-        </ul>
         <p>
           If you have something to talk about or something you want to learn, we
           can help!{" "}
@@ -52,12 +46,13 @@ export default function Home() {
           </strong>{" "}
           and we can make it happen.
         </p>
+        <h2>EndOf10</h2>
         <p>
-          To watch broadcasts live, you can go to{" "}
-          <strong>
-            <a href="https://stream.linux.usu.edu">stream.linux.usu.edu</a>
-          </strong>
-          .
+          Did you know? Microsoft is ending support for Windows 10 on{" "}
+          <strong>October 14</strong>. The FSLC is partnered with{" "}
+          <a href="https://endof10.org/">EndOf10</a> to provide help to those
+          who want to <strong>switch to Linux</strong> instead of buying a new
+          computer. Get in contact with us to learn more!
         </p>
         <h2>Discord</h2>
         <p>

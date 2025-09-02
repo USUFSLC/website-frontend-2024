@@ -4,6 +4,7 @@ import styles from "@/styles/Watch.module.css";
 import ReactHlsPlayer from "react-hls-video-player/dist/components/ReactHlsPlayer";
 import { getServerSidePropsWithAuthDefaults } from "@/authUtils.ts";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export const getServerSideProps = getServerSidePropsWithAuthDefaults(
   async () => {
@@ -38,6 +39,16 @@ export default function Watch() {
       </Head>
       <main>
         <h1>Watch</h1>
+        {streams.length === 0 ? (
+          <p>
+            No streams are ongoing! Check out{" "}
+            <strong>
+              <Link href="/calendar">the calendar page</Link>
+            </strong>{" "}
+            to look for past or future events, or just wait here for a stream to
+            start.
+          </p>
+        ) : null}
         {streams.map((s) => {
           return (
             <>
