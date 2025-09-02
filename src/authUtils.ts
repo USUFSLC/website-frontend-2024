@@ -31,7 +31,7 @@ export const OIDC_CLIENT = new OidcClient({
   client_id: process.env.OIDC_CLIENT_ID!,
   client_secret: process.env.OIDC_CLIENT_SECRET!,
   scope: "openid profile",
-  redirect_uri: `https://${process.env.HOSTNAME}/api/auth/callback`,
+  redirect_uri: `https://${process.env.REAL_HOSTNAME}/api/auth/callback`,
 });
 
 Log.setLogger(console);
