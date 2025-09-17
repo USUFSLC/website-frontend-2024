@@ -31,7 +31,7 @@ export default function NewEvent() {
       payload.end = fd.get("end");
     }
 
-    await fetch("/api/event/", {
+    await fetch("/api/event", {
       method: "POST",
       body: JSON.stringify(payload),
       headers: { "content-type": "application/json" },

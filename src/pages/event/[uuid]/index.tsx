@@ -19,7 +19,7 @@ export default function EventPage() {
   const router = useRouter();
 
   useEffect(() => {
-    fetch(`/api/event/${router.query.uuid}/?with-streams`).then((r) => {
+    fetch(`/api/event/${router.query.uuid}?with-streams`).then((r) => {
       if (r.ok) {
         r.json().then(setEvent);
       } else {

@@ -29,7 +29,7 @@ export default function NewEvent() {
       event_id: router.query.uuid,
     };
 
-    await fetch(`/api/event/${router.query.uuid}/stream/`, {
+    await fetch(`/api/event/${router.query.uuid}/stream`, {
       method: "POST",
       body: JSON.stringify(payload),
       headers: { "content-type": "application/json" },
@@ -53,7 +53,7 @@ export default function NewEvent() {
   }
 
   useEffect(() => {
-    fetch(`/api/event/${router.query.uuid}/`).then((r) => {
+    fetch(`/api/event/${router.query.uuid}`).then((r) => {
       if (r.ok) {
         r.json().then(setServerEvent);
       } else {

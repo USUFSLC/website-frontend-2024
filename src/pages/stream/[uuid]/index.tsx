@@ -24,7 +24,7 @@ export default function StreamPage() {
   const { session } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`/api/stream/${router.query.uuid}/?with-event`).then((r) => {
+    fetch(`/api/stream/${router.query.uuid}?with-event`).then((r) => {
       if (r.ok) {
         r.json().then(setStream);
       } else {
@@ -34,7 +34,7 @@ export default function StreamPage() {
   }, [router.query.uuid]);
 
   async function getStreamKey() {
-    const response = await fetch(`/api/stream/${router.query.uuid}/token/`);
+    const response = await fetch(`/api/stream/${router.query.uuid}/token`);
     if (response.ok) {
       const j = await response.json();
       setStreamKey(j.token);

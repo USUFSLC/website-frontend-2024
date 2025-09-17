@@ -14,7 +14,7 @@ export default function Watch() {
   const [streams, setStreams] = useState<ServerStream[]>([]);
 
   async function getStreams() {
-    const response = await fetch(`/api/stream/live/`);
+    const response = await fetch(`/api/stream/live`);
     if (response.ok) {
       const j = await response.json();
       setStreams(j);

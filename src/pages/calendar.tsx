@@ -21,7 +21,7 @@ export default function CalendarPage() {
     const start = new Date(year, month);
     const end = new Date(year, month + 1);
     fetch(
-      `/api/event/?from=${start.toISOString()}&to=${end.toISOString()}&with-streams`,
+      `/api/event?from=${start.toISOString()}&to=${end.toISOString()}&with-streams`,
     ).then((r) => {
       if (r.ok) {
         r.json().then((j: ServerEvent[]) => {
