@@ -85,7 +85,7 @@ export default function StreamPage() {
               </p>
               <p>
                 {(() => {
-                  if (stream.started_at === null) {
+                  if (stream.start_time === null) {
                     return (
                       <>
                         This stream has not yet started. Once the stream is
@@ -94,7 +94,7 @@ export default function StreamPage() {
                       </>
                     );
                   }
-                  if (stream.ended_at === null) {
+                  if (stream.end_time === null) {
                     return (
                       <>
                         This stream is live! Visit{" "}
@@ -103,7 +103,7 @@ export default function StreamPage() {
                       </>
                     );
                   }
-                  if (stream.processed_at === null) {
+                  if (stream.process_time === null) {
                     return (
                       <>
                         This stream is currently being transcoded. Check back

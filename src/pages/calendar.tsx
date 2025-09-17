@@ -27,7 +27,7 @@ export default function CalendarPage() {
         r.json().then((j: ServerEvent[]) => {
           const result: Record<number, ServerEvent[]> = {};
           j.forEach((event) => {
-            const date = new Date(event.starts_at * 1000);
+            const date = new Date(event.start_time * 1000);
             const dayNumber = date.getDate();
             if (Object.hasOwn(result, dayNumber)) {
               result[dayNumber].push(event);

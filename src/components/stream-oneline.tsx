@@ -7,12 +7,12 @@ type Props = {
 export default function StreamOneline({ stream }: Props) {
   let lengthLine;
 
-  if (stream.started_at === null) {
+  if (stream.start_time === null) {
     lengthLine = "Unstarted";
-  } else if (stream.ended_at === null) {
+  } else if (stream.end_time === null) {
     lengthLine = `LIVE`;
   } else {
-    const streamLength = stream.ended_at - stream.started_at;
+    const streamLength = stream.end_time - stream.start_time;
     const seconds = streamLength % 60 | 0;
     const minutes = (streamLength / 60) % 60 | 0;
     const hours = (streamLength / 3600) % 60 | 0;
