@@ -14,7 +14,7 @@ export const getServerSideProps = getServerSidePropsWithAuthDefaults(
 );
 
 export default function StreamPage() {
-  const [stream, setStream] = useState<ServerStream | null>(null);
+  const [stream, setStream] = useState<ServerStreamIn | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [streamKey, setStreamKey] = useState<string>("");
   const [streamKeyCopyMessage, setStreamKeyCopyMessage] = useState<string>("");

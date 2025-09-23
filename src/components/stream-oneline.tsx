@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 type Props = {
-  stream: ServerStream;
+  stream: ServerStreamIn;
 };
 
 export default function StreamOneline({ stream }: Props) {

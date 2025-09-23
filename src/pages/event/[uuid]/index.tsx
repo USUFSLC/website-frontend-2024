@@ -1,10 +1,12 @@
 import Head from "next/head";
 
 import { getServerSidePropsWithAuthDefaults } from "@/authUtils.ts";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import EventOverview from "@/components/event-overview.tsx";
 import StreamOneline from "@/components/stream-oneline.tsx";
+import { AuthContext } from "@/components/auth-context.tsx";
+import EventForm from "@/components/forms/event.tsx";
 
 export const getServerSideProps = getServerSidePropsWithAuthDefaults(
   async () => {
@@ -13,7 +15,7 @@ export const getServerSideProps = getServerSidePropsWithAuthDefaults(
 );
 
 export default function EventPage() {
-  const [event, setEvent] = useState<ServerEvent | null>(null);
+  const [event, setEvent] = useState<ServerEventIn | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
@@ -27,6 +29,29 @@ export default function EventPage() {
       }
     });
   }, [router.query.uuid]);
+
+  const { session } = useContext(AuthContext);
+
+  const formCallback = async (payload: Partial<ServerEventOut>) => {
+    return fetch(`/api/event/${router.query.uuid}`, {
+      method: "PATCH",
+      body: JSON.stringify(payload),
+      headers: { "content-type": "application/json" },
+    }).then((r) => {
+      if (!r.ok) {
+        if (r.headers.get("content-type")?.startsWith("text/plain")) {
+          return r.text();
+        }
+        return "Unknown error; see logs";
+      }
+
+      r.json().then((j) => {
+        setEvent(j);
+      });
+
+      return null;
+    });
+  };
 
   return (
     <>
@@ -62,6 +87,12 @@ export default function EventPage() {
                   </>
                 );
               })}
+              {session?.roles?.findIndex((s) => s === "leadership") !== -1 ? (
+                <>
+                  <h2>Edit Details</h2>
+                  <EventForm event={event} callback={formCallback} />
+                </>
+              ) : null}
             </>
           );
         })()}

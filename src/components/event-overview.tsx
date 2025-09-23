@@ -5,7 +5,7 @@ import { AuthContext } from "./auth-context.tsx";
 import StreamOneline from "./stream-oneline.tsx";
 
 type Props = {
-  event: ServerEvent;
+  event: ServerEventIn;
   basic?: boolean;
 };
 

@@ -12,7 +12,7 @@ export const getServerSideProps = getServerSidePropsWithAuthDefaults(
 
 export default function NewEvent() {
   const [errorText, setErrorText] = useState("");
-  const [serverEvent, setServerEvent] = useState<ServerEvent | null>(null);
+  const [serverEvent, setServerEvent] = useState<ServerEventIn | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
