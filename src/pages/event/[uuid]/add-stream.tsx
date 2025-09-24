@@ -1,8 +1,9 @@
 import Head from "next/head";
 import { getServerSidePropsWithAuthDefaults } from "@/authUtils.ts";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import EventOverview from "@/components/event-overview.tsx";
+import StreamForm from "@/components/forms/stream.tsx";
 
 export const getServerSideProps = getServerSidePropsWithAuthDefaults(
   async () => {
@@ -13,44 +14,31 @@ export const getServerSideProps = getServerSidePropsWithAuthDefaults(
 export default function NewEvent() {
   const [errorText, setErrorText] = useState("");
   const [serverEvent, setServerEvent] = useState<ServerEventIn | null>(null);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
 
   const router = useRouter();
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const fd = new FormData(event.currentTarget);
-    const payload: Record<string, unknown> = {
-      title: fd.get("title"),
-      nonmember_presenter: fd.get("presenter"),
-      description: fd.get("description"),
-      event_id: router.query.uuid,
-    };
-
-    await fetch(`/api/event/${router.query.uuid}/stream`, {
+  const onSubmit = async (payload: Partial<ServerStreamOut>) => {
+    return fetch(`/api/event/${router.query.uuid}/stream`, {
       method: "POST",
       body: JSON.stringify(payload),
       headers: { "content-type": "application/json" },
     }).then((r) => {
       if (!r.ok) {
         if (r.headers.get("content-type")?.startsWith("text/plain")) {
-          r.text().then((t) => {
-            setErrorText(t);
+          return r.text().then((t) => {
+            return t;
           });
-        } else {
-          setErrorText("Unknown error; see logs");
         }
-
-        return;
+        return "Unknown error; see logs";
       }
 
       r.json().then((j) => {
         router.push(`/stream/${j.id}`);
       });
+
+      return null;
     });
-  }
+  };
 
   useEffect(() => {
     fetch(`/api/event/${router.query.uuid}`).then((r) => {
@@ -61,15 +49,6 @@ export default function NewEvent() {
       }
     });
   }, [router.query.uuid]);
-
-  function prefillFromEvent() {
-    if (!serverEvent) {
-      return;
-    }
-
-    setTitle(serverEvent.title);
-    setDescription(serverEvent.description ?? "");
-  }
 
   return (
     <>
@@ -89,50 +68,14 @@ export default function NewEvent() {
             <>
               <h2>{serverEvent.title}</h2>
               <EventOverview event={serverEvent} basic />
-              <button type="button" onClick={prefillFromEvent}>
-                Prefill details from event
-              </button>
-              <br />
-              <br />
             </>
           );
         })()}
-        <form onSubmit={onSubmit}>
-          <label htmlFor="title">
-            Title:{" "}
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-
-          <label htmlFor="presenter">
-            Presenter: <input type="text" id="presenter" name="presenter" />
-          </label>
-          <br />
-          <br />
-
-          <label htmlFor="description">
-            Description:
-            <textarea
-              id="description"
-              name="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-
-          <p>{errorText}</p>
-
-          <input type="submit" value="Submit" />
-        </form>
+        <StreamForm
+          stream={null}
+          serverEvent={serverEvent}
+          callback={onSubmit}
+        />
       </main>
     </>
   );

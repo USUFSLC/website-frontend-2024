@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import styles from "@/styles/Watch.module.css";
 import { AuthContext } from "@/components/auth-context.tsx";
+import StreamForm from "@/components/forms/stream.tsx";
 
 export const getServerSideProps = getServerSidePropsWithAuthDefaults(
   async () => {
@@ -46,6 +47,27 @@ export default function StreamPage() {
       }
     }
   }
+
+  const formCallback = async (payload: Partial<ServerStreamOut>) => {
+    return fetch(`/api/stream/${router.query.uuid}`, {
+      method: "PATCH",
+      body: JSON.stringify(payload),
+      headers: { "content-type": "application/json" },
+    }).then((r) => {
+      if (!r.ok) {
+        if (r.headers.get("content-type")?.startsWith("text/plain")) {
+          return r.text();
+        }
+        return "Unknown error; see logs";
+      }
+
+      r.json().then((j) => {
+        setStream(j);
+      });
+
+      return null;
+    });
+  };
 
   return (
     <>
@@ -124,26 +146,42 @@ export default function StreamPage() {
                 <i>Presented by {stream.presenter}</i>
               </p>
               {stream.description === null ? "" : <p>{stream.description}</p>}
+              {session?.roles === undefined ||
+              session.roles.findIndex((s) => s === "streamer") === -1 ? (
+                ""
+              ) : (
+                <>
+                  <h2>Stream Key</h2>
+                  <p>
+                    <input
+                      type="password"
+                      value={streamKey}
+                      disabled
+                      placeholder="Stream Key"
+                    />{" "}
+                    <button type="button" onClick={getStreamKey}>
+                      Get Stream Key
+                    </button>{" "}
+                    {streamKeyCopyMessage}
+                  </p>
+                </>
+              )}
+              {session?.roles === undefined ||
+              session.roles.findIndex((s) => s === "streamer") === -1 ? (
+                ""
+              ) : (
+                <>
+                  <h2>Edit Details</h2>
+                  <StreamForm
+                    stream={stream}
+                    serverEvent={stream?.event ?? null}
+                    callback={formCallback}
+                  />
+                </>
+              )}
             </>
           );
         })()}
-        {session?.roles === undefined ||
-        session.roles.findIndex((s) => s === "streamer") === -1 ? (
-          ""
-        ) : (
-          <p>
-            <input
-              type="password"
-              value={streamKey}
-              disabled
-              placeholder="Stream Key"
-            />{" "}
-            <button type="button" onClick={getStreamKey}>
-              Get Stream Key
-            </button>{" "}
-            {streamKeyCopyMessage}
-          </p>
-        )}
       </main>
     </>
   );

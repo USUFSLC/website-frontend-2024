@@ -87,12 +87,15 @@ export default function EventPage() {
                   </>
                 );
               })}
-              {session?.roles?.findIndex((s) => s === "leadership") !== -1 ? (
+              {session?.roles === undefined ||
+              session.roles.findIndex((s) => s === "streamer") === -1 ? (
+                ""
+              ) : (
                 <>
                   <h2>Edit Details</h2>
                   <EventForm event={event} callback={formCallback} />
                 </>
-              ) : null}
+              )}
             </>
           );
         })()}
