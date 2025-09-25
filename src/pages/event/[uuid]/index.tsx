@@ -7,6 +7,7 @@ import EventOverview from "@/components/event-overview.tsx";
 import StreamOneline from "@/components/stream-oneline.tsx";
 import { AuthContext } from "@/components/auth-context.tsx";
 import EventForm from "@/components/forms/event.tsx";
+import Link from "next/link";
 
 export const getServerSideProps = getServerSidePropsWithAuthDefaults(
   async () => {
@@ -74,6 +75,16 @@ export default function EventPage() {
             <>
               <h1>{event.title}</h1>
               <EventOverview event={event} basic />
+              {session?.roles === undefined ||
+              session.roles.findIndex((s) => s === "streamer") === -1 ? (
+                ""
+              ) : (
+                <p>
+                  <Link href={`/event/${router.query.uuid}/add-stream`}>
+                    <strong>Add Stream to Event</strong>
+                  </Link>
+                </p>
+              )}
               {event.streams && event.streams.length > 0 ? (
                 <h2>Streams</h2>
               ) : (
