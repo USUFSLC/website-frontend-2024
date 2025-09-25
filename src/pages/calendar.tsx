@@ -93,7 +93,9 @@ export default function CalendarPage() {
         ) : (
           selectedEvents.map((event) => (
             <>
-              <h3>{event.title}</h3>
+              <h3>
+                <Link href={`/event/${event.id}`}>{event.title}</Link>
+              </h3>
               <EventOverview event={event} />
             </>
           ))

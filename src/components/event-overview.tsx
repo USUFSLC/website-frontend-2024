@@ -78,15 +78,10 @@ export default function EventOverview({ event, basic }: Props) {
           session.roles.findIndex((s) => s === "streamer") === -1 ? (
             ""
           ) : (
-            <li key="newstream">
+            <li>
               <Link href={`event/${event.id}/add-stream`}>Add Stream</Link>
             </li>
           )}
-          <li key="more">
-            <strong>
-              <Link href={`/event/${event.id}`}>More info...</Link>
-            </strong>
-          </li>
         </>
       )}
     </ul>
