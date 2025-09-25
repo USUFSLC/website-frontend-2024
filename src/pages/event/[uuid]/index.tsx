@@ -54,6 +54,16 @@ export default function EventPage() {
     });
   };
 
+  const deleteEvent = () => {
+    fetch(`/api/event/${router.query.uuid}`, {
+      method: "DELETE",
+    }).then((r) => {
+      if (r.ok) {
+        router.push("/calendar");
+      }
+    });
+  };
+
   return (
     <>
       <Head>
@@ -99,12 +109,18 @@ export default function EventPage() {
                 );
               })}
               {session?.roles === undefined ||
-              session.roles.findIndex((s) => s === "streamer") === -1 ? (
+              session.roles.findIndex((s) => s === "leadership") === -1 ? (
                 ""
               ) : (
                 <>
                   <h2>Edit Details</h2>
                   <EventForm event={event} callback={formCallback} />
+                  <h2>Delete</h2>
+                  <p>
+                    <button id="delete" type="button" onClick={deleteEvent}>
+                      Delete Event
+                    </button>
+                  </p>
                 </>
               )}
             </>

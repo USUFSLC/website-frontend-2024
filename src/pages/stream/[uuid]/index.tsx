@@ -69,6 +69,16 @@ export default function StreamPage() {
     });
   };
 
+  const deleteStream = () => {
+    fetch(`/api/stream/${router.query.uuid}`, {
+      method: "DELETE",
+    }).then((r) => {
+      if (r.ok) {
+        router.push("/stream");
+      }
+    });
+  };
+
   return (
     <>
       <Head>
@@ -167,7 +177,7 @@ export default function StreamPage() {
                 </>
               )}
               {session?.roles === undefined ||
-              session.roles.findIndex((s) => s === "streamer") === -1 ? (
+              session.roles.findIndex((s) => s === "leadership") === -1 ? (
                 ""
               ) : (
                 <>
@@ -177,6 +187,12 @@ export default function StreamPage() {
                     serverEvent={stream?.event ?? null}
                     callback={formCallback}
                   />
+                  <h2>Delete</h2>
+                  <p>
+                    <button id="delete" type="button" onClick={deleteStream}>
+                      Delete Stream
+                    </button>
+                  </p>
                 </>
               )}
             </>
