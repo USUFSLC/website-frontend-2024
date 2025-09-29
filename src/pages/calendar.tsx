@@ -14,20 +14,20 @@ export const getServerSideProps = getServerSidePropsWithAuthDefaults(
 );
 
 export default function CalendarPage() {
-  const [events, setEvents] = useState<Record<number, ServerEvent[]>>({});
-  const [selectedEvents, setSelectedEvents] = useState<ServerEvent[]>([]);
+  const [events, setEvents] = useState<Record<number, ServerEventIn[]>>({});
+  const [selectedEvents, setSelectedEvents] = useState<ServerEventIn[]>([]);
 
   function loadEvents(year: number, month: number) {
     const start = new Date(year, month);
     const end = new Date(year, month + 1);
     fetch(
-      `/api/event/?from=${start.toISOString()}&to=${end.toISOString()}&with-streams`,
+      `/api/event?from=${start.toISOString()}&to=${end.toISOString()}&with-streams`,
     ).then((r) => {
       if (r.ok) {
-        r.json().then((j: ServerEvent[]) => {
-          const result: Record<number, ServerEvent[]> = {};
+        r.json().then((j: ServerEventIn[]) => {
+          const result: Record<number, ServerEventIn[]> = {};
           j.forEach((event) => {
-            const date = new Date(event.starts_at * 1000);
+            const date = new Date(event.start_time * 1000);
             const dayNumber = date.getDate();
             if (Object.hasOwn(result, dayNumber)) {
               result[dayNumber].push(event);
@@ -93,7 +93,9 @@ export default function CalendarPage() {
         ) : (
           selectedEvents.map((event) => (
             <>
-              <h3>{event.title}</h3>
+              <h3>
+                <Link href={`/event/${event.id}`}>{event.title}</Link>
+              </h3>
               <EventOverview event={event} />
             </>
           ))

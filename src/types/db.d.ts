@@ -1,9 +1,9 @@
-// An event as returned from a server endpoint
-type ServerEvent = {
+// An event as returned from a server endpoint (no
+type ServerEvent<D> = {
   id: string;
-  created_at: number;
-  starts_at: number;
-  ends_at: number;
+  create_time: number;
+  start_time: D;
+  end_time: D;
   location: string | null;
   title: string;
   description: string | null;
@@ -11,18 +11,26 @@ type ServerEvent = {
   streams?: ServerStream[];
 };
 
+type ServerEventOut = ServerEvent<number | string>;
+
+type ServerEventIn = ServerEvent<number>;
+
 // A stream as returned from a server endpoint
-type ServerStream = {
+type ServerStream<D> = {
   id: string;
-  created_at: number;
-  started_at: number | null;
-  ended_at: number | null;
-  processed_at: number | null;
+  create_time: D;
+  start_time: D | null;
+  end_time: D | null;
+  process_time: D | null;
   title: string;
   presenter: string | null;
   nonmember_presenter: string | null;
   description: string;
-  event?: ServerEvent;
+  event?: ServerEvent<D>;
   event_id: string | null;
   token?: string;
 };
+
+type ServerStreamOut = ServerStream<number | string>;
+
+type ServerStreamIn = ServerStream<number>;

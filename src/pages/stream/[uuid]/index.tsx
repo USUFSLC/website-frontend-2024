@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import styles from "@/styles/Watch.module.css";
 import { AuthContext } from "@/components/auth-context.tsx";
+import StreamForm from "@/components/forms/stream.tsx";
 
 export const getServerSideProps = getServerSidePropsWithAuthDefaults(
   async () => {
@@ -14,7 +15,7 @@ export const getServerSideProps = getServerSidePropsWithAuthDefaults(
 );
 
 export default function StreamPage() {
-  const [stream, setStream] = useState<ServerStream | null>(null);
+  const [stream, setStream] = useState<ServerStreamIn | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [streamKey, setStreamKey] = useState<string>("");
   const [streamKeyCopyMessage, setStreamKeyCopyMessage] = useState<string>("");
@@ -24,7 +25,7 @@ export default function StreamPage() {
   const { session } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`/api/stream/${router.query.uuid}/?with-event`).then((r) => {
+    fetch(`/api/stream/${router.query.uuid}?with-event`).then((r) => {
       if (r.ok) {
         r.json().then(setStream);
       } else {
@@ -34,7 +35,7 @@ export default function StreamPage() {
   }, [router.query.uuid]);
 
   async function getStreamKey() {
-    const response = await fetch(`/api/stream/${router.query.uuid}/token/`);
+    const response = await fetch(`/api/stream/${router.query.uuid}/token`);
     if (response.ok) {
       const j = await response.json();
       setStreamKey(j.token);
@@ -46,6 +47,37 @@ export default function StreamPage() {
       }
     }
   }
+
+  const formCallback = async (payload: Partial<ServerStreamOut>) => {
+    return fetch(`/api/stream/${router.query.uuid}`, {
+      method: "PATCH",
+      body: JSON.stringify(payload),
+      headers: { "content-type": "application/json" },
+    }).then((r) => {
+      if (!r.ok) {
+        if (r.headers.get("content-type")?.startsWith("text/plain")) {
+          return r.text();
+        }
+        return "Unknown error; see logs";
+      }
+
+      r.json().then((j) => {
+        setStream(j);
+      });
+
+      return null;
+    });
+  };
+
+  const deleteStream = () => {
+    fetch(`/api/stream/${router.query.uuid}`, {
+      method: "DELETE",
+    }).then((r) => {
+      if (r.ok) {
+        router.push("/stream");
+      }
+    });
+  };
 
   return (
     <>
@@ -85,7 +117,7 @@ export default function StreamPage() {
               </p>
               <p>
                 {(() => {
-                  if (stream.started_at === null) {
+                  if (stream.start_time === null) {
                     return (
                       <>
                         This stream has not yet started. Once the stream is
@@ -94,7 +126,7 @@ export default function StreamPage() {
                       </>
                     );
                   }
-                  if (stream.ended_at === null) {
+                  if (stream.end_time === null) {
                     return (
                       <>
                         This stream is live! Visit{" "}
@@ -103,7 +135,7 @@ export default function StreamPage() {
                       </>
                     );
                   }
-                  if (stream.processed_at === null) {
+                  if (stream.process_time === null) {
                     return (
                       <>
                         This stream is currently being transcoded. Check back
@@ -124,26 +156,48 @@ export default function StreamPage() {
                 <i>Presented by {stream.presenter}</i>
               </p>
               {stream.description === null ? "" : <p>{stream.description}</p>}
+              {session?.roles === undefined ||
+              session.roles.findIndex((s) => s === "streamer") === -1 ? (
+                ""
+              ) : (
+                <>
+                  <h2>Stream Key</h2>
+                  <p>
+                    <input
+                      type="password"
+                      value={streamKey}
+                      disabled
+                      placeholder="Stream Key"
+                    />{" "}
+                    <button type="button" onClick={getStreamKey}>
+                      Get Stream Key
+                    </button>{" "}
+                    {streamKeyCopyMessage}
+                  </p>
+                </>
+              )}
+              {session?.roles === undefined ||
+              session.roles.findIndex((s) => s === "leadership") === -1 ? (
+                ""
+              ) : (
+                <>
+                  <h2>Edit Details</h2>
+                  <StreamForm
+                    stream={stream}
+                    serverEvent={stream?.event ?? null}
+                    callback={formCallback}
+                  />
+                  <h2>Delete</h2>
+                  <p>
+                    <button id="delete" type="button" onClick={deleteStream}>
+                      Delete Stream
+                    </button>
+                  </p>
+                </>
+              )}
             </>
           );
         })()}
-        {session?.roles === undefined ||
-        session.roles.findIndex((s) => s === "streamer") === -1 ? (
-          ""
-        ) : (
-          <p>
-            <input
-              type="password"
-              value={streamKey}
-              disabled
-              placeholder="Stream Key"
-            />{" "}
-            <button type="button" onClick={getStreamKey}>
-              Get Stream Key
-            </button>{" "}
-            {streamKeyCopyMessage}
-          </p>
-        )}
       </main>
     </>
   );

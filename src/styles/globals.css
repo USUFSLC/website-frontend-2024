@@ -119,37 +119,37 @@ main {
   padding-right: 10px;
 }
 
-h1 {
+h1, h1 a {
   color: var(--gruvbox-mode-bold-yellow);
-  font-size: 2.5em;
+  font-size: 2.5rem;
   margin-bottom: 0.5em;
 }
 
-h2 {
+h2, h2 a {
   color: var(--gruvbox-mode-bold-orange);
-  font-size: 2em;
+  font-size: 2rem;
   margin-bottom: 0.5em;
 }
 
-h3 {
+h3, h3 a {
   color: var(--gruvbox-mode-bold-yellow);
-  font-size: 1.5em;
+  font-size: 1.5rem;
   margin-bottom: 0.5em;
 }
 
-h4 {
+h4, h4 a {
   color: var(--gruvbox-mode-bold-green);
-  font-size: 1.2em;
+  font-size: 1.2rem;
   margin-bottom: 0.5em;
 }
 
-h5 {
+h5, h5 a {
   color: var(--gruvbox-mode-fg-0);
-  font-size: 1em;
+  font-size: 1rem;
   margin-bottom: 0.5em;
 }
 
-h6 {
+h6, h6 a {
   color: var(--gruvbox-mode-fg-0);
   font-size: 1em;
   margin-bottom: 0.5em;
