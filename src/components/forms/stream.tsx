@@ -8,7 +8,7 @@ type Props = {
 
 export default function StreamForm({ stream, serverEvent, callback }: Props) {
   const [title, setTitle] = useState(stream?.title ?? "");
-  const [presenter, setPresenter] = useState(stream?.nonmember_presenter ?? "");
+  const [presenter, setPresenter] = useState(stream?.presenter ?? "");
   const [description, setDescription] = useState(stream?.description ?? "");
 
   const [errorText, setErrorText] = useState("");
@@ -19,7 +19,7 @@ export default function StreamForm({ stream, serverEvent, callback }: Props) {
     const fd = new FormData(fevt.currentTarget);
     const payload: Record<string, unknown> = {
       title: fd.get("title"),
-      nonmember_presenter: fd.get("presenter"),
+      presenter: fd.get("presenter"),
       description: fd.get("description"),
     };
 
