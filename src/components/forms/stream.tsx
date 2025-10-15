@@ -19,7 +19,7 @@ export default function StreamForm({ stream, serverEvent, callback }: Props) {
     const fd = new FormData(fevt.currentTarget);
     const payload: Record<string, unknown> = {
       title: fd.get("title"),
-      presenter: fd.get("presenter"),
+      nonmember_presenter: fd.get("presenter"),
       description: fd.get("description"),
     };
 
