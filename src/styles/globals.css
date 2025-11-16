@@ -183,7 +183,7 @@ strong a, a strong, strong .link, .link strong {
   color: var(--gruvbox-mode-bold-aqua);
 }
 
-input, textarea {
+input, textarea, select {
     background-color: var(--gruvbox-mode-bg-0);
     color: var(--gruvbox-mode-fg-1);
     border: 2px solid var(--gruvbox-mode-bg-4);

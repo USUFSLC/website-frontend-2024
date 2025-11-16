@@ -85,6 +85,13 @@ export default function EventPage() {
             <>
               <h1>{event.title}</h1>
               <EventOverview event={event} basic />
+              <p>
+                <strong>
+                  <a href={`/api/event/${router.query.uuid}?format=ics`}>
+                    Add event to calendar (.ics)
+                  </a>
+                </strong>
+              </p>
               {session?.roles === undefined ||
               session.roles.findIndex((s) => s === "streamer") === -1 ? (
                 ""
