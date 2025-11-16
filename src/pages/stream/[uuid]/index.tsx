@@ -156,6 +156,15 @@ export default function StreamPage() {
                 <i>Presented by {stream.presenter}</i>
               </p>
               {stream.description === null ? "" : <p>{stream.description}</p>}
+              {stream.process_time ? (
+                <p>
+                  <a href={`/content/stream/vod/${stream.id}/${stream.id}.mp4`}>
+                    Permalink to VOD
+                  </a>
+                </p>
+              ) : (
+                ""
+              )}
               {session?.roles === undefined ||
               session.roles.findIndex((s) => s === "streamer") === -1 ? (
                 ""
