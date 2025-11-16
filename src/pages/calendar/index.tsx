@@ -57,6 +57,13 @@ export default function CalendarPage() {
       </Head>
       <main>
         <h1>Calendar</h1>
+        <p>
+          <strong>
+            <Link href="/calendar/subscribe">
+              &gt;&gt; Add FSLC events to your calendar application
+            </Link>
+          </strong>
+        </p>
         <Calendar
           showNeighboringMonth={false}
           tileDisabled={(d) => {
