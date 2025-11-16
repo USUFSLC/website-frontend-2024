@@ -112,6 +112,12 @@ body {
   margin: 0;
 }
 
+#page-container {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
 main {
   margin: 0 auto;
   max-width: var(--content-width) ;
@@ -241,4 +247,11 @@ input[type=submit]:hover, input[type=submit]:disabled:hover {
 button:hover, button:focus, input[type=submit]:hover, input[type=submit]:focus {
 	background-color: var(--gruvbox-mode-bold-purple);
 	outline: none;
+}
+
+footer {
+	border-top: 1px solid var(--gruvbox-mode-bg-2);
+	background-color: var(--gruvbox-mode-bg-0-h);
+	text-align: center;
+	padding: 1em 0 1.5em 0;
 }
