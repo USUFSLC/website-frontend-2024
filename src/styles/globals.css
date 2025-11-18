@@ -246,7 +246,3 @@ button:hover, button:focus, input[type=submit]:hover, input[type=submit]:focus {
 	background-color: var(--gruvbox-mode-bold-purple);
 	outline: none;
 }
-
-button.highlight:hover {
-	background-color: var(--gruvbox-mode-yellow);
-}
