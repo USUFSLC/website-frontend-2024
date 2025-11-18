@@ -46,6 +46,16 @@ export default function Home() {
           </strong>{" "}
           and we can make it happen.
         </p>
+        <h2>FSLC Accounts</h2>
+        <p>
+          You can now <strong>sign up for an FSLC account</strong>. Right now,
+          this just gets you an account on our <strong>Matrix instance</strong>,
+          but we&apos;ll be adding more services as time goes on.{" "}
+          <Link href="/discord">
+            <strong>Sign up here with a discord account</strong>
+          </Link>
+          .
+        </p>
         <h2>EndOf10</h2>
         <p>
           Did you know? Microsoft is ending support for Windows 10 on{" "}

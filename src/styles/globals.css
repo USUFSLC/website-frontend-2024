@@ -232,6 +232,10 @@ button, input[type=submit] {
 	transition: background-color 0.3s;
 }
 
+button.highlight {
+	background-color: var(--gruvbox-mode-green);
+}
+
 button:disabled, button:disabled:hover, 
 input[type=submit]:hover, input[type=submit]:disabled:hover {
 	background-color: var(--gruvbox-mode-fg-4);
@@ -241,4 +245,8 @@ input[type=submit]:hover, input[type=submit]:disabled:hover {
 button:hover, button:focus, input[type=submit]:hover, input[type=submit]:focus {
 	background-color: var(--gruvbox-mode-bold-purple);
 	outline: none;
+}
+
+button.highlight:hover {
+	background-color: var(--gruvbox-mode-yellow);
 }
