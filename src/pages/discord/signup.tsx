@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { FormEvent, useState } from "react";
 
-const NAME_REGEXP = /^[a-z][a-z0-9-_\\.]{0,63}$"/;
+const NAME_REGEXP = /^[a-z][a-z0-9-_.]{0,63}$/;
 
 export default function DiscordSignup() {
   const [errorMessage, setErrorMessage] = useState("");
