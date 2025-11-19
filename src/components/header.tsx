@@ -56,6 +56,13 @@ export default function Header() {
       <div className={styles.right}>
         <button
           type="button"
+          className="highlight"
+          onClick={() => router.push("/discord")}
+        >
+          Create account
+        </button>
+        <button
+          type="button"
           onClick={() => router.push(`/api/auth/login?after=${router.asPath}`)}
         >
           Sign in

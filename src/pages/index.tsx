@@ -46,13 +46,15 @@ export default function Home() {
           </strong>{" "}
           and we can make it happen.
         </p>
-        <h2>EndOf10</h2>
+        <h2>FSLC Accounts</h2>
         <p>
-          Did you know? Microsoft is ending support for Windows 10 on{" "}
-          <strong>October 14</strong>. The FSLC is partnered with{" "}
-          <a href="https://endof10.org/">EndOf10</a> to provide help to those
-          who want to <strong>switch to Linux</strong> instead of buying a new
-          computer. Get in contact with us to learn more!
+          You can now <strong>sign up for an FSLC account</strong>. Right now,
+          this just gets you an account on our <strong>Matrix instance</strong>,
+          but we&apos;ll be adding more services as time goes on.{" "}
+          <Link href="/discord">
+            <strong>Sign up here with a discord account</strong>
+          </Link>
+          .
         </p>
         <h2>Discord</h2>
         <p>
@@ -66,6 +68,27 @@ export default function Home() {
           You&apos;ll also get meeting schedules as soon as they come out as
           well as information about other club appearances.
         </p>
+        <h2>Matrix</h2>
+        <p>
+          The club has an official self-hosted <strong>Matrix instance</strong>.{" "}
+          <a href="https://matrix.org">Matrix</a> is an open-source, federated
+          instant messaging protocol. The club&apos;s official matrix space
+          (similar to a Discord server) is at{" "}
+          <a href="https://matrix.to/#/#fslc:linux.usu.edu">
+            <strong>#fslc:linux.usu.edu</strong>
+          </a>
+          . It is public, so you can join it no matter which server your account
+          is on.
+        </p>
+        <p>
+          If you want a user account on our homeserver, linux.usu.edu, you will
+          have to sign up for an <Link href="/discord">FSLC account</Link>. We
+          also host a web-based matrix client at{" "}
+          <a href="https://chat.linux.usu.edu">
+            <strong>chat.linux.usu.edu</strong>
+          </a>{" "}
+          to help you get started faster.
+        </p>
         <h2>IRC</h2>
         <p>
           We also have an IRC channel now, if you hate Discord. We can&apos;t
@@ -73,6 +96,14 @@ export default function Home() {
           can be found at{" "}
           <a href="irc:irc.libera.chat/##usufslc">##usufslc on libera.chat</a> (
           <a href="https://web.libera.chat/##usufslc">web access</a>).
+        </p>
+        <h2>EndOf10</h2>
+        <p>
+          Did you know? Microsoft is ending support for Windows 10 on{" "}
+          <strong>October 14</strong>. The FSLC is partnered with{" "}
+          <a href="https://endof10.org/">EndOf10</a> to provide help to those
+          who want to <strong>switch to Linux</strong> instead of buying a new
+          computer. Get in contact with us to learn more!
         </p>
         <h2>Hardware</h2>
         <p>
