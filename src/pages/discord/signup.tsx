@@ -4,9 +4,12 @@ import { FormEvent, useState } from "react";
 const NAME_REGEXP = /^[a-z][a-z0-9-_.]{0,63}$/;
 
 export default function DiscordSignup() {
+  const [pending, setPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    setPending(true);
 
     const fd = new FormData(e.currentTarget);
     const name = fd.get("name")!;
@@ -16,6 +19,7 @@ export default function DiscordSignup() {
       setErrorMessage(
         "Invalid username. See the paragraph above for guidelines.",
       );
+      setPending(false);
       return;
     }
     const payload = {
@@ -42,6 +46,7 @@ export default function DiscordSignup() {
         }
       }
     }
+    setPending(false);
   }
 
   return (
@@ -72,7 +77,7 @@ export default function DiscordSignup() {
             </label>
           </p>
           <p>
-            <input type="submit" value="Create my account" />
+            <input type="submit" value="Create my account" disabled={pending} />
           </p>
           <p style={{ color: "var(--gruvbox-mode-red)" }}>{errorMessage}</p>
         </form>
