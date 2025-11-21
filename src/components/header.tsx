@@ -54,19 +54,29 @@ export default function Header() {
         </ul>
       </div>
       <div className={styles.right}>
-        <button
-          type="button"
-          className="highlight"
-          onClick={() => router.push("/discord")}
-        >
-          Create account
-        </button>
-        <button
-          type="button"
-          onClick={() => router.push(`/api/auth/login?after=${router.asPath}`)}
-        >
-          Sign in
-        </button>
+        {session ? (
+          <button type="button" onClick={() => router.push(`/api/auth/logout`)}>
+            Sign out
+          </button>
+        ) : (
+          <>
+            <button
+              type="button"
+              className="highlight"
+              onClick={() => router.push("/discord")}
+            >
+              Create account
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                router.push(`/api/auth/login?after=${router.asPath}`)
+              }
+            >
+              Sign in
+            </button>
+          </>
+        )}
       </div>
     </nav>
   );
