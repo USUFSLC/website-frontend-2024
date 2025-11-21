@@ -47,6 +47,13 @@ export function setAuthCookies(
   ]);
 }
 
+export function unsetAuthCookies(res: ServerResponse) {
+  res.setHeader("Set-Cookie", [
+    `__Secure-idToken=;path=/;httponly;secure;expires=Thu, 01 Jan 1970 00:00:00 GMT`,
+    `__Secure-refreshToken=;path=/;httponly;secure;Thu, 01 Jan 1970 00:00:00 GMT`,
+  ]);
+}
+
 export async function getPublicKey() {
   if (key === null || Date.now() - keyCacheTime > KEY_CACHE_TIME) {
     const jwk = await fetch(KEY_URL).then((r) => r.json());
