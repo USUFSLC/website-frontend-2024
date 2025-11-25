@@ -1,3 +1,13 @@
+type ServerResource = {
+  id: string;
+  create_time: number;
+  filename: string;
+  filesize: number;
+  content_hash: string;
+  stream_id: string;
+  event_id: string;
+};
+
 // An event as returned from a server endpoint (no
 type ServerEvent<D> = {
   id: string;
@@ -9,6 +19,7 @@ type ServerEvent<D> = {
   description: string | null;
   // eslint-disable-next-line no-use-before-define
   streams?: ServerStream[];
+  resources?: ServerResource[];
 };
 
 type ServerEventOut = ServerEvent<number | string>;
@@ -28,6 +39,7 @@ type ServerStream<D> = {
   description: string;
   event?: ServerEvent<D>;
   event_id: string | null;
+  resources?: ServerResource[];
   token?: string;
 };
 
