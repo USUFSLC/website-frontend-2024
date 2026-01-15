@@ -4,18 +4,19 @@ type Props = {
   resource: ServerResource;
 };
 
-const PREFIXES = ["", "K", "M", "G"];
+const PREFIXES = ["", "k", "M", "G"];
 
 function sizeString(size: number) {
   let finalSize = size;
-  const prefix = "";
+  let prefix;
   for (let i = 0; i < PREFIXES.length; i += 1) {
+    prefix = PREFIXES[i];
     if (finalSize < 1024) {
       break;
     }
     finalSize /= 1024;
   }
-  return `${finalSize.toFixed(prefix === "" ? 0 : 1)}${prefix}B`;
+  return `${finalSize.toFixed(prefix === "" ? 0 : 1)} ${prefix}B`;
 }
 
 export function ResourceOverview({ resource }: Props) {
