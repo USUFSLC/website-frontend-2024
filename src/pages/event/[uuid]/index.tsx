@@ -8,6 +8,8 @@ import StreamOneline from "@/components/stream-oneline.tsx";
 import { AuthContext } from "@/components/auth-context.tsx";
 import EventForm from "@/components/forms/event.tsx";
 import Link from "next/link";
+import ResourceUpload from "@/components/forms/resource.tsx";
+import { ResourceOverview } from "@/components/resource-overview.tsx";
 
 export const getServerSideProps = getServerSidePropsWithAuthDefaults(
   async () => {
@@ -22,13 +24,15 @@ export default function EventPage() {
   const router = useRouter();
 
   useEffect(() => {
-    fetch(`/api/event/${router.query.uuid}?with-streams`).then((r) => {
-      if (r.ok) {
-        r.json().then(setEvent);
-      } else {
-        setError("Could not load event");
-      }
-    });
+    fetch(`/api/event/${router.query.uuid}?with-streams&with-resources`).then(
+      (r) => {
+        if (r.ok) {
+          r.json().then(setEvent);
+        } else {
+          setError("Could not load event");
+        }
+      },
+    );
   }, [router.query.uuid]);
 
   const { session } = useContext(AuthContext);
@@ -62,6 +66,14 @@ export default function EventPage() {
         router.push("/calendar");
       }
     });
+  };
+
+  const onResourceUploaded = (res: ServerResource) => {
+    if (event) {
+      const newEvent: ServerEventIn = { ...event };
+      newEvent?.resources?.push(res);
+      setEvent(newEvent);
+    }
   };
 
   return (
@@ -102,6 +114,22 @@ export default function EventPage() {
                   </Link>
                 </p>
               )}
+              {event.resources && event.resources.length > 0 ? (
+                <>
+                  <h2>Resources</h2>
+                  <ul>
+                    {event.resources.map((res) => {
+                      return (
+                        <li key={res.id}>
+                          <ResourceOverview resource={res} />
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </>
+              ) : (
+                ""
+              )}
               {event.streams && event.streams.length > 0 ? (
                 <h2>Streams</h2>
               ) : (
@@ -122,6 +150,12 @@ export default function EventPage() {
                 <>
                   <h2>Edit Details</h2>
                   <EventForm event={event} callback={formCallback} />
+                  <h3>Upload Resources</h3>
+                  <ResourceUpload
+                    kind="event"
+                    parent={event}
+                    onComplete={onResourceUploaded}
+                  />
                   <h2>Delete</h2>
                   <p>
                     <button id="delete" type="button" onClick={deleteEvent}>

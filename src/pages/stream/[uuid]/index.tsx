@@ -7,6 +7,8 @@ import { useContext, useEffect, useState } from "react";
 import styles from "@/styles/Watch.module.css";
 import { AuthContext } from "@/components/auth-context.tsx";
 import StreamForm from "@/components/forms/stream.tsx";
+import { ResourceOverview } from "@/components/resource-overview.tsx";
+import ResourceUpload from "@/components/forms/resource.tsx";
 
 export const getServerSideProps = getServerSidePropsWithAuthDefaults(
   async () => {
@@ -25,13 +27,15 @@ export default function StreamPage() {
   const { session } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`/api/stream/${router.query.uuid}?with-event`).then((r) => {
-      if (r.ok) {
-        r.json().then(setStream);
-      } else {
-        setError("Could not load event");
-      }
-    });
+    fetch(`/api/stream/${router.query.uuid}?with-event&with-resources`).then(
+      (r) => {
+        if (r.ok) {
+          r.json().then(setStream);
+        } else {
+          setError("Could not load event");
+        }
+      },
+    );
   }, [router.query.uuid]);
 
   async function getStreamKey() {
@@ -77,6 +81,14 @@ export default function StreamPage() {
         router.push("/stream");
       }
     });
+  };
+
+  const onResourceUploaded = (res: ServerResource) => {
+    if (stream) {
+      const newStream: ServerStreamIn = { ...stream };
+      newStream?.resources?.push(res);
+      setStream(newStream);
+    }
   };
 
   return (
@@ -165,6 +177,22 @@ export default function StreamPage() {
               ) : (
                 ""
               )}
+              {stream.resources && stream.resources.length > 0 ? (
+                <>
+                  <h2>Resources</h2>
+                  <ul>
+                    {stream.resources.map((res) => {
+                      return (
+                        <li key={res.id}>
+                          <ResourceOverview resource={res} />
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </>
+              ) : (
+                ""
+              )}
               {session?.roles === undefined ||
               session.roles.findIndex((s) => s === "streamer") === -1 ? (
                 ""
@@ -195,6 +223,12 @@ export default function StreamPage() {
                     stream={stream}
                     serverEvent={stream?.event ?? null}
                     callback={formCallback}
+                  />
+                  <h3>Upload Resources</h3>
+                  <ResourceUpload
+                    kind="stream"
+                    parent={stream}
+                    onComplete={onResourceUploaded}
                   />
                   <h2>Delete</h2>
                   <p>
