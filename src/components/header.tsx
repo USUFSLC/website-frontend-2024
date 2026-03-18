@@ -19,6 +19,10 @@ const NAVBAR_ENTRIES: NavbarEntry[] = [
     text: "Calendar",
     link: "/calendar",
   },
+  {
+    text: "User pages",
+    link: "/user-pages",
+  },
 ];
 
 export default function Header() {

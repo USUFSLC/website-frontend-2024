@@ -15,13 +15,15 @@
   "dependencies": {
     "date-and-time": "^4.0.3",
     "eslint-config-airbnb": "^19.0.4",
+    "git-clone-client": "^0.0.6",
     "hls.js": "^1.6.11",
     "jose": "^6.0.12",
     "next": "14.2.3",
     "oidc-client-ts": "^3.3.0",
     "react": "^18",
     "react-calendar": "^6.0.0",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-markdown": "^10.1.0"
   },
   "devDependencies": {
     "@types/hls.js": "^0.13.3",
