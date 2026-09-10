@@ -173,7 +173,8 @@ export function canControlStream(
   stream: ServerStreamIn,
 ): boolean {
   return (
-    getAuthLevel(session) >= AuthLevel.STREAMER &&
-    stream.presenter === session?.uuid
+    (getAuthLevel(session) >= AuthLevel.STREAMER &&
+      stream.presenter === session?.uuid) ||
+    getAuthLevel(session) >= AuthLevel.ADMIN
   );
 }
