@@ -25,10 +25,9 @@ export default function Home() {
         </p>
         <h2>Meetings</h2>
         <p>
-          This semester, we will be holding meetings{" "}
-          <strong>every Tuesday</strong> at <strong>6:30 pm</strong> in{" "}
-          <strong>WIDT 007</strong> (check our Discord for more information).
-          See{" "}
+          For Fall 2026 we will be holding meetings{" "}
+          <strong>every Wednesday</strong> at <strong>6:30 pm</strong> in{" "}
+          <strong>EL 109</strong> (check our Discord for more information). See{" "}
           <strong>
             <Link href="/calendar">the calendar page</Link>
           </strong>{" "}
